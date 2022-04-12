@@ -33,7 +33,7 @@ class DiscussionTopicController extends Controller
     public function store(Request $request)
     {
         $tagID = DiscussionTopic::create([
-            'user_id' => 51,
+            'user_id' => auth()->id(),
             'name' => $request->input('name'),
             'content' => $request->input('content'),
             'topic_id' => $request->input('topic'),
