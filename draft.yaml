@@ -1,0 +1,55 @@
+models:
+  Topic:
+    name: string:400
+    timestamps: false
+    relationships:
+      hasMany: DiscussionTopic
+
+  Tag:
+    name: string:400
+    timestamps: false
+    relationships:
+      hasMany: DiscussionTag
+
+  Category:
+    name: string:400
+    timestamps: false
+    relationships:
+      hasMany: DiscussionTopic
+
+  DiscussionTopic:
+    user_id: id foreign:users
+    name: string:400
+    content: longtext
+    topic_id: id foreign:topics
+    category_id: id foreign:categories
+    status: boolean
+    relationships:
+      hasMany: DiscussionTag, Reply
+
+  DiscussionTag:
+    discus_topic_id: id foreign:discussion_topics.id
+    tag_id: id foreign:tags
+    timestamps: false
+
+  Reply:
+    user_id: id foreign:users
+    content: longtext
+    discus_topic_id: id foreign:discussion_topics.id
+    relationships:
+      hasMany: Comment
+
+  Comment:
+    user_id: id foreign:users
+    content: longtext
+    reply_id: id foreign:replies.id
+
+  Like:
+    user_id: id foreign:users
+    item_id: integer
+    item_topic: string:400
+
+controllers:
+  # ...
+
+seeders: Topic, Tag,Category, DiscussionTopic, DiscussionTag, Reply, Comment, Like
