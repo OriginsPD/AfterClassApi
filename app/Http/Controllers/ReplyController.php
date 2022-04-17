@@ -26,7 +26,7 @@ class ReplyController extends Controller
     public function store(Request $request)
     {
         Reply::create([
-            'user_id' => 51,
+            'user_id' => auth()->id(),
             'content' => $request->input('comment'),
             'discus_topic_id' => $request->input('id'),
         ]);

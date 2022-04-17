@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\DiscussionTopic;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -48,5 +50,15 @@ class User extends Authenticatable
         return new Attribute(
             set: fn ($value) => bcrypt($value)
         );
+    }
+
+    public function discusTopic(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DiscussionTopic::class, 'user_id', 'id');
+    }
+
+    public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
     }
 }

@@ -14,6 +14,6 @@ class DiscussionTagSeeder extends Seeder
      */
     public function run(): void
     {
-        DiscussionTag::factory(10)->count(5)->create();
+        DiscussionTag::factory(10)->create();
     }
 }

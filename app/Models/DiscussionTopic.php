@@ -43,12 +43,12 @@ class DiscussionTopic extends Model
 
     public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Reply::class, 'discus_topic_id', 'id')->with(['like', 'user']);
+        return $this->hasMany(Reply::class, 'discus_topic_id', 'id')->with(['like', 'comments', 'user']);
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id')->with(['profile']);
     }
 
     public function topic(): \Illuminate\Database\Eloquent\Relations\BelongsTo

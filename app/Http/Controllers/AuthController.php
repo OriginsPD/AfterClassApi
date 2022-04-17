@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $request->validate([
+        $verified = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:4|max:10'
         ], [
@@ -18,32 +19,50 @@ class AuthController extends Controller
             'password.required' => trans('auth.failed'),
         ]);
 
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(['email' => $verified['email'], 'password' => $verified['password']])) {
             $token = auth()->user()->createToken('tokenName')->plainTextToken;
 
             $responseBody = [
+                'status' => 200,
                 'token' => $token,
-                'authInfo' => auth()->user()
+                'authInfo' => auth()->user()->load(['profile'])
             ];
         } else {
-            $message = 'Login in Successful';
+            $responseBody = [
+                'status' => 201,
+                'message' => 'Login in Successful'
+            ];
         }
 
-        $message = 'Login Failed';
-
-
         return response()->json([
-            'status' => http_response_code(),
-            'body' => $responseBody ?? $message
+            'body' => $responseBody,
+
         ]);
     }
 
     public function register(Request $request)
     {
-        User::create([
+        // $request->validate([
+        //     'username' => 'required',
+        //     'email' => 'required|email|unique:users,email',
+        //     'password' => 'required|min:4|max:8|confirmed',
+        //     'confirmPassword' => 'required',
+        // ], [
+        //     'email.required' => 'Email address is required',
+        //     'password.required' => 'A password is required',
+        //     'confirmPassword.required' => 'Password confirmation is required'
+        // ]);
+
+        $userID = User::create([
             'username' => $request->input('username'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
+        ])->id;
+
+        Profile::create([
+            'user_id' => $userID,
+            'about' => 'Ready to help',
+            'imgUrl' => 'defaultImage'
         ]);
 
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
@@ -54,7 +73,7 @@ class AuthController extends Controller
                 'authInfo' => auth()->user()
             ];
         } else {
-            $message = 'Login in Successful';
+            $message = ['Login in Successful'];
         }
 
         return response()->json([

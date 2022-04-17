@@ -3,20 +3,18 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Topic;
-use App\Models\Category;
+use App\Models\Profile;
 use Illuminate\Support\Str;
-use App\Models\DiscussionTopic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DiscussionTopicFactory extends Factory
+class ProfileFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = DiscussionTopic::class;
+    protected $model = Profile::class;
 
     /**
      * Define the model's default state.
@@ -24,14 +22,11 @@ class DiscussionTopicFactory extends Factory
      * @return array
      */
     public function definition(): array
-    {        
+    {
         return [
             'user_id' => User::factory(),
-            'name' => $this->faker->name,
-            'content' => $this->faker->paragraphs(3, true),
-            'topic_id' => Topic::factory(),
-            'category_id' => Category::factory(),
-            'status' => $this->faker->boolean,
+            'about' => $this->faker->text,
+            'imgUrl' => $this->faker->text,
         ];
     }
 }

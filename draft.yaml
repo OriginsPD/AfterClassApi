@@ -1,4 +1,15 @@
 models:
+  Profile:
+    user_id: id foreign:users
+    about: longtext
+    imgUrl: string
+
+  inbox:
+    user_id: id foreign:users
+    subject: string:400
+    body: longtext
+    recipient_id: id foreign:users
+
   Topic:
     name: string:400
     timestamps: false

@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Topic;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\inbox;
 
-class TopicFactory extends Factory
+class InboxFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Topic::class;
+    protected $model = Inbox::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +24,10 @@ class TopicFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'user_id' => User::factory(),
+            'subject' => $this->faker->regexify('[A-Za-z0-9]{400}'),
+            'body' => $this->faker->text,
+            'recipient_id' => User::factory(),
         ];
     }
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscussionTopicController;
 
@@ -21,9 +23,7 @@ use App\Http\Controllers\DiscussionTopicController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 // Authentication
 Route::post('/login', [AuthController::class, 'login']);
@@ -42,6 +42,9 @@ Route::apiResource('/category', CategoryController::class);
 // Topic
 Route::apiResource('/topic', TopicController::class);
 
+Route::get('/member', [ProfileController::class, 'memberIndex']);
+
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Discussion Topic
@@ -54,6 +57,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Reply 
     Route::apiResource('/reply', ReplyController::class);
 
+    Route::post('/comment', [CommentController::class, 'store']);
 
+    // Profile 
+    // Route::post('/userProfile', [ProfileController::class, 'updateProfile']);
+
+    // Auth Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -17,7 +17,7 @@ class DiscussionTopicController extends Controller
     public function index()
     {
         $query = DiscussionTopic::has('discussionTags')
-            ->with(['topic', 'like', 'category', 'discussionTags'])
+            ->with(['topic', 'like', 'category', 'discussionTags', 'user'])
             ->latest('created_at')
             ->get();
 
@@ -92,6 +92,10 @@ class DiscussionTopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DiscussionTopic::where('id', $id)->delete();
+
+        return response()->json([
+            'message' => 'post deleted'
+        ]);
     }
 }

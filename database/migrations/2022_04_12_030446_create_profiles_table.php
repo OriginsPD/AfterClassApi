@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDiscussionTopicsTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,11 @@ class CreateDiscussionTopicsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('discussion_topics', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('name', 400);
-            $table->longText('content');
-            $table->foreignId('topic_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->boolean('status')->default(0);
+            $table->longText('about');
+            $table->string('imgUrl');
             $table->timestamps();
         });
 
@@ -36,6 +33,6 @@ class CreateDiscussionTopicsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('discussion_topics');
+        Schema::dropIfExists('profiles');
     }
 }

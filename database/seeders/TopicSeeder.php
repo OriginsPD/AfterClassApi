@@ -4,16 +4,17 @@ namespace Database\Seeders;
 
 use App\Models\Topic;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TopicSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
-     * @return void
+    //  * @return void
      */
-    public function run(): void
+    public function run()
     {
-        Topic::factory(10)->count(5)->create();
+        Topic::factory()->create();
     }
 }

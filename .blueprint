@@ -1,36 +1,10 @@
 created:
-    - database/factories/TopicFactory.php
-    - database/factories/TagFactory.php
-    - database/factories/CategoryFactory.php
-    - database/factories/DiscussionTopicFactory.php
-    - database/factories/DiscussionTagFactory.php
-    - database/factories/ReplyFactory.php
-    - database/factories/CommentFactory.php
-    - database/factories/LikeFactory.php
-    - database/migrations/2022_04_09_140308_create_topics_table.php
-    - database/migrations/2022_04_09_140309_create_tags_table.php
-    - database/migrations/2022_04_09_140310_create_categories_table.php
-    - database/migrations/2022_04_09_140311_create_discussion_topics_table.php
-    - database/migrations/2022_04_09_140312_create_discussion_tags_table.php
-    - database/migrations/2022_04_09_140313_create_replies_table.php
-    - database/migrations/2022_04_09_140314_create_comments_table.php
-    - database/migrations/2022_04_09_140315_create_likes_table.php
-    - app/Models/Topic.php
-    - app/Models/Tag.php
-    - app/Models/Category.php
-    - app/Models/DiscussionTopic.php
-    - app/Models/DiscussionTag.php
-    - app/Models/Reply.php
-    - app/Models/Comment.php
-    - app/Models/Like.php
-    - database/seeders/TopicSeeder.php
-    - database/seeders/TagSeeder.php
-    - database/seeders/CategorySeeder.php
-    - database/seeders/DiscussionTopicSeeder.php
-    - database/seeders/DiscussionTagSeeder.php
-    - database/seeders/ReplySeeder.php
-    - database/seeders/CommentSeeder.php
-    - database/seeders/LikeSeeder.php
+    - database/factories/ProfileFactory.php
+    - database/factories/InboxFactory.php
+    - database/migrations/2022_04_12_030446_create_profiles_table.php
+    - database/migrations/2022_04_12_030447_create_inboxes_table.php
+    - app/Models/Profile.php
+    - app/Models/inbox.php
 models:
     User: {  }
     Topic: { name: 'string:400', timestamps: false, relationships: { hasMany: DiscussionTopic } }
@@ -41,3 +15,5 @@ models:
     Reply: { user_id: 'id foreign:users', content: longtext, discus_topic_id: 'id foreign:discussion_topics.id', relationships: { hasMany: Comment } }
     Comment: { user_id: 'id foreign:users', content: longtext, reply_id: 'id foreign:replies.id' }
     Like: { user_id: 'id foreign:users', item_id: integer, item_topic: 'string:400' }
+    Profile: { user_id: 'id foreign:users', about: longtext, img_url: string }
+    inbox: { user_id: 'id foreign:users', subject: 'string:400', body: longtext, recipient_id: 'id foreign:users' }

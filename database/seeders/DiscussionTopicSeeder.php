@@ -14,6 +14,6 @@ class DiscussionTopicSeeder extends Seeder
      */
     public function run(): void
     {
-        DiscussionTopic::factory(10)->count(5)->create();
+        DiscussionTopic::factory(10)->create();
     }
 }
