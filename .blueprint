@@ -1,10 +1,8 @@
 created:
-    - database/factories/ProfileFactory.php
-    - database/factories/InboxFactory.php
-    - database/migrations/2022_04_12_030446_create_profiles_table.php
-    - database/migrations/2022_04_12_030447_create_inboxes_table.php
-    - app/Models/Profile.php
-    - app/Models/inbox.php
+    - database/factories/ViewsFactory.php
+    - database/migrations/2022_04_18_192348_create_views_table.php
+    - app/Models/Views.php
+    - database/seeders/ViewsSeeder.php
 models:
     User: {  }
     Topic: { name: 'string:400', timestamps: false, relationships: { hasMany: DiscussionTopic } }
@@ -17,3 +15,4 @@ models:
     Like: { user_id: 'id foreign:users', item_id: integer, item_topic: 'string:400' }
     Profile: { user_id: 'id foreign:users', about: longtext, img_url: string }
     inbox: { user_id: 'id foreign:users', subject: 'string:400', body: longtext, recipient_id: 'id foreign:users' }
+    Views: { user_id: 'id foreign:users', discus_topic_id: 'id foreign:discussion_topics.id', views: integer, relationships: { hasMany: DiscussionTopic } }

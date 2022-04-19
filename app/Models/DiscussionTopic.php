@@ -65,4 +65,9 @@ class DiscussionTopic extends Model
     {
         return $this->hasMany(Like::class, 'item_id', 'id')->where('item_topic', 'discussTopic');
     }
+
+    public function View()
+    {
+        return $this->hasMany(Views::class, 'discus_topic_id', 'id');
+    }
 }

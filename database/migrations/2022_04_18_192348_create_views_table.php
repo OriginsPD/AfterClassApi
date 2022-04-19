@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfilesTable extends Migration
+class CreateViewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,10 @@ class CreateProfilesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->longText('about');
+            $table->foreignId('discus_topic_id')->constrained('discussion_topics')->cascadeOnDelete()->cascadeOnUpdate();
+            // $table->integer('views');
             $table->timestamps();
         });
 
@@ -32,6 +32,6 @@ class CreateProfilesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('views');
     }
 }

@@ -42,16 +42,15 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // $request->validate([
-        //     'username' => 'required',
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|min:4|max:8|confirmed',
-        //     'confirmPassword' => 'required',
-        // ], [
-        //     'email.required' => 'Email address is required',
-        //     'password.required' => 'A password is required',
-        //     'confirmPassword.required' => 'Password confirmation is required'
-        // ]);
+        $request->validate([
+            'username' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:4|max:8',
+
+        ], [
+            'email.required' => 'Email address is required',
+            'password.required' => 'A password is required',
+        ]);
 
         $userID = User::create([
             'username' => $request->input('username'),
@@ -62,40 +61,42 @@ class AuthController extends Controller
         Profile::create([
             'user_id' => $userID,
             'about' => 'Ready to help',
-            'imgUrl' => 'defaultImage'
         ]);
 
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(
+            [
+                'email' => $request->input('email'),
+                'password' => $request->input('password')
+            ]
+        )) {
             $token = auth()->user()->createToken('tokenName')->plainTextToken;
 
             $responseBody = [
+                'status' => 200,
                 'token' => $token,
-                'authInfo' => auth()->user()
+                'authInfo' => auth()->user()->load(['profile'])
             ];
         } else {
-            $message = ['Login in Successful'];
+            $responseBody = [
+                'status' => 201,
+                'message' => 'Login in Successful'
+            ];
         }
 
         return response()->json([
             'status' => http_response_code(),
-            'body' => $responseBody ?? $message
+            'body' => $responseBody,
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-
-        // auth()->user()->tokens()->delete();
+        auth()->user()->tokens()->delete();
 
         // Auth::logout();
 
-        // $request->session()->invalidate();
-
-        // $request->session()->regenerateToken();
-
         return response()->json([
             'message' => 'Logged Out',
-            'info' => auth()->user()
         ]);
     }
 }

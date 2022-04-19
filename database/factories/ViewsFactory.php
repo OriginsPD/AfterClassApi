@@ -3,18 +3,19 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Profile;
+use App\Models\Views;
 use Illuminate\Support\Str;
+use App\Models\DiscussionTopic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProfileFactory extends Factory
+class ViewsFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Profile::class;
+    protected $model = Views::class;
 
     /**
      * Define the model's default state.
@@ -25,7 +26,8 @@ class ProfileFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'about' => $this->faker->paragraph(3, true),
+            'discus_topic_id' => DiscussionTopic::factory(),
+            // 'views' => $this->faker->numberBetween(-10000, 10000),
         ];
     }
 }

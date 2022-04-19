@@ -17,7 +17,7 @@ class DiscussionTopicController extends Controller
     public function index()
     {
         $query = DiscussionTopic::has('discussionTags')
-            ->with(['topic', 'like', 'category', 'discussionTags', 'user'])
+            ->with(['topic', 'like', 'category', 'discussionTags', 'user', 'view'])
             ->latest('created_at')
             ->get();
 

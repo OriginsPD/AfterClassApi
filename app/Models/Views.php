@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Profile extends Model
+class Views extends Model
 {
     use HasFactory;
 
@@ -17,9 +15,7 @@ class Profile extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'about',
-
+        'discus_topic_id',
     ];
 
     /**
@@ -29,11 +25,21 @@ class Profile extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'user_id' => 'integer',
+        'discus_topic_id' => 'integer',
     ];
+
+    public function discussionTopics(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DiscussionTopic::class, 'discus_topic_id', 'id');
+    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class);
+    }
+
+    public function discusTopic(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DiscussionTopic::class);
     }
 }

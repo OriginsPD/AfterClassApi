@@ -1,5 +1,5 @@
 models:
-  Profile:
+ Profile:
     user_id: id foreign:users
     about: longtext
     imgUrl: string
@@ -60,7 +60,15 @@ models:
     item_id: integer
     item_topic: string:400
 
+  Views:
+    user_id: id foreign:users
+    discus_topic_id: id foreign:discussion_topics.id
+    views: integer
+    relationships:
+      hasMany: DiscussionTopic
+
+
 controllers:
   # ...
 
-seeders: Topic, Tag,Category, DiscussionTopic, DiscussionTag, Reply, Comment, Like
+seeders: Topic, Tag,Category, DiscussionTopic, DiscussionTag, Reply, Comment, Like,Views
