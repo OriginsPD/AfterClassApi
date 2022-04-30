@@ -19,22 +19,29 @@ class ProfileController extends Controller
     {
         $request->validate([
             'username' => 'required',
-            'image' => 'sometimes|image'
+            'about' => 'required'
+            // 'image' => 'sometimes|image'
         ]);
 
-        User::where('id', 10)
+        User::where('id', auth()->id())
             ->update([
                 'username' => $request->input('username')
             ]);
 
-        Profile::where('user_id', 10)
+        Profile::where('user_id', auth()->id())
             ->update([
-                'about' => 'Hello I am testing',
-                'imgUrl' => $request->file('image')->store('/', 'avatar')
+                'about' => $request->input('about'),
+                // 'imgUrl' => $request->file('image')->store('/', 'avatar')
             ]);
 
+        $responseBody = [
+            'status' => 200,
+            'authInfo' => auth()->user()->load(['profile'])
+        ];
+
         return response()->json([
-            'status' => http_response_code()
+            'status' => http_response_code(),
+            'body' => $responseBody,
         ]);
     }
 }

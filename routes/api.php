@@ -41,6 +41,7 @@ Route::apiResource('/category', CategoryController::class);
 // Topic
 Route::apiResource('/topic', TopicController::class);
 
+
 Route::get('/member', [ProfileController::class, 'memberIndex']);
 
 // View Counter
@@ -61,7 +62,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/comment', [CommentController::class, 'store']);
 
     // Profile 
-    // Route::post('/userProfile', [ProfileController::class, 'updateProfile']);
+    Route::post('/userProfile', [ProfileController::class, 'updateProfile']);
 
     // Auth Logout
     Route::get('/logout', [AuthController::class, 'logout']);

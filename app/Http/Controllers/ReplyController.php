@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reply;
 use Illuminate\Http\Request;
+use App\Models\DiscussionTopic;
 
 class ReplyController extends Controller
 {
@@ -30,6 +31,9 @@ class ReplyController extends Controller
             'content' => $request->input('comment'),
             'discus_topic_id' => $request->input('id'),
         ]);
+
+        DiscussionTopic::where('id', $request->input('id'))
+            ->update(['status' => 1]);
 
         return response()->json([
             'status' => http_response_code(),

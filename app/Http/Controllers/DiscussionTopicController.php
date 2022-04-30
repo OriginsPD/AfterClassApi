@@ -95,6 +95,7 @@ class DiscussionTopicController extends Controller
         DiscussionTopic::where('id', $id)->delete();
 
         return response()->json([
+            'status' => http_response_code(),
             'message' => 'post deleted'
         ]);
     }
