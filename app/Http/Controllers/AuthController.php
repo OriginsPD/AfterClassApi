@@ -63,6 +63,7 @@ class AuthController extends Controller
             'about' => 'Ready to help',
         ]);
 
+
         if (Auth::attempt(
             [
                 'email' => $request->input('email'),

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\DiscussionViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
@@ -41,6 +42,8 @@ Route::apiResource('/category', CategoryController::class);
 // Topic
 Route::apiResource('/topic', TopicController::class);
 
+// Post View 
+Route::resource('landingView', DiscussionViewController::class)->only(['index']);
 
 Route::get('/member', [ProfileController::class, 'memberIndex']);
 
